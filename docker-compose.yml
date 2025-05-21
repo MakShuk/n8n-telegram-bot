@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: starter-template
+    networks:
+      - message_broker_network
+    environment:
+      - NODE_ENV=production
+      - TZ=Europe/Moscow
+    volumes:
+      - ./envs:/app/envs
+    restart: unless-stopped
+    ports:
+      - "5888:5888"
+
+networks:
+  message_broker_network:
+    driver: bridge
