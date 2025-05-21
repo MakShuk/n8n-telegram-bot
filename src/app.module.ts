@@ -4,8 +4,13 @@ import { getConfigModuleOptions } from './configs/env-config/config.module';
 
 
 
+import { AezaApiModule } from './aeza-api/aeza-api.module';
+
 @Module({
-  imports: [ConfigModule.forRoot(getConfigModuleOptions())],
+  imports: [
+    ConfigModule.forRoot(getConfigModuleOptions()),
+    AezaApiModule
+  ],
   controllers: [],
   providers: [],
 })
