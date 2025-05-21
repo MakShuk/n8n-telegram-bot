@@ -8,7 +8,7 @@ export class AezaApiService {
   private api: AezaApi;
 
   constructor() {
-    this.api = new AezaApi('fgfdgfdrt');
+    this.api = new AezaApi('fgfdgfdrt5345657534gfdgf24');
   }
 
   async getAccount(): Promise<any> {
