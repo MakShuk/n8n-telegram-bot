@@ -8,11 +8,6 @@ import { TriggerWorkflowDto, GetWorkflowsQuery } from './n8n.types';
 export class N8nController {
   constructor(private readonly n8nService: N8nService) {}
 
-  @Get()
-  getStatus() {
-    return { status: 'ok' };
-  }
-
   @Post('trigger')
   @ApiBody({ type: TriggerWorkflowDto })
   async triggerWorkflow(@Body() dto: TriggerWorkflowDto) {
@@ -20,6 +15,8 @@ export class N8nController {
   }
 
   @Get('workflows')
+  // Swagger: описываем параметры запроса через DTO
+  // Для полного покрытия можно явно указать @ApiQuery для каждого параметра, но если используется DTO с декораторами ApiPropertyOptional, Swagger сам подхватит параметры.
   async getWorkflows(@Query() query: GetWorkflowsQuery) {
     return await this.n8nService.getWorkflows(query);
   }

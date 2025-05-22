@@ -19,7 +19,7 @@ export class N8nService {
 
     try {
       const response = await firstValueFrom(
-        this.httpService.post(url, payload, { headers, timeout: 15000 })
+        this.httpService.post(url, payload, { headers, timeout: 15000 }),
       );
       this.logger.log(`Workflow triggered: ${response.status}`);
       return response.data;
@@ -33,6 +33,8 @@ export class N8nService {
     const headers = { 'X-N8N-API-KEY': this.configService.get('N8N_API_KEY') };
     const params: any = {};
 
+    console.log(url);
+
     if (query.active !== undefined) params.active = query.active;
     if (query.tags) params.tags = query.tags;
     if (query.name) params.name = query.name;
@@ -43,7 +45,7 @@ export class N8nService {
 
     try {
       const response = await firstValueFrom(
-        this.httpService.get(url, { headers, params, timeout: 15000 })
+        this.httpService.get(url, { headers, params, timeout: 15000 }),
       );
       this.logger.log(`Workflows retrieved: ${response.status}`);
       return response.data;
@@ -55,7 +57,7 @@ export class N8nService {
   private handleError(error: any): void {
     if (error.response) {
       this.logger.error(
-        `n8n API error: ${error.response.status} - ${JSON.stringify(error.response.data)}`
+        `n8n API error: ${error.response.status} - ${JSON.stringify(error.response.data)}`,
       );
     } else if (error.request) {
       this.logger.error('No response from n8n API');
