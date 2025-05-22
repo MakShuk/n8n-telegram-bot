@@ -1,16 +1,20 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
+import { ConfigService } from '@nestjs/config';
 import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class N8nService {
   private readonly logger = new Logger(N8nService.name);
 
-  constructor(private readonly httpService: HttpService) {}
+  constructor(
+    private readonly httpService: HttpService,
+    private readonly configService: ConfigService,
+  ) {}
 
   async triggerWorkflow(payload: object): Promise<any> {
-    const url = `${process.env.N8N_BASE_URL}/webhook/${process.env.WORKFLOW_ID}`;
-    const headers = { 'X-N8N-API-KEY': process.env.N8N_API_KEY };
+    const url = `${this.configService.get('N8N_BASE_URL')}/webhook/${this.configService.get('WORKFLOW_ID')}`;
+    const headers = { 'X-N8N-API-KEY': this.configService.get('N8N_API_KEY') };
 
     try {
       const response = await firstValueFrom(

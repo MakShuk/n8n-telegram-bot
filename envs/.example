@@ -19,3 +19,8 @@ AEZA_TOKEN=your_aeza_token
 
 # Пример дополнительной переменной
 CUSTOM_VARIABLE=example_value
+# URL для n8n
+N8N_BASE_URL=your_n8n_url
+
+# API ключ для n8n
+N8N_API_KEY=your_n8n_api_key
