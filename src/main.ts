@@ -1,15 +1,41 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { Logger } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { Logger } from '@nestjs/common';
+
 async function bootstrap() {
-  let port = 5890;
+  // Получаем порт из аргументов командной строки, переменных окружения или по умолчанию
+  function resolvePort(): number {
+    const argvPort = process.argv
+      .slice(2)
+      .map(arg => {
+        if (arg.startsWith('--port=')) return arg.split('=')[1];
+        if (arg === '--port') return null;
+        return null;
+      })
+      .filter(Boolean)[0];
+
+    const nextArgPortIndex = process.argv.indexOf('--port');
+    let nextArgPort: string | undefined;
+    if (nextArgPortIndex !== -1 && process.argv[nextArgPortIndex + 1]) {
+      nextArgPort = process.argv[nextArgPortIndex + 1];
+    }
+
+    const portStr = argvPort || nextArgPort || process.env.PORT;
+    const port = portStr ? parseInt(portStr, 10) : 5890;
+    return isNaN(port) ? 5890 : port;
+  }
+
+  let port = resolvePort();
   let serverStarted = false;
 
   while (!serverStarted) {
     try {
-      const app = await NestFactory.create(AppModule);
+      const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+      app.set('query parser', 'extended');
 
       // Настройка Swagger
       const config = new DocumentBuilder()
@@ -29,15 +55,18 @@ async function bootstrap() {
 
       const document = SwaggerModule.createDocument(app, config);
       SwaggerModule.setup('api', app, document);
+      
+      Logger.debug(`📝 Swagger документация доступна по адресу: http://localhost:${port}/api`);
+      Logger.log(`🚀 Проект запущен на порту: ${port}`);
 
       await app.init();
       await app.listen(port);
-
-      // Добавляем сообщение о доступности Swagger
-      Logger.log(`📝 Swagger документация доступна по адресу: http://localhost:${port}/api`);
       serverStarted = true;
     } catch (error: unknown) {
-      Logger.error(`❌ Error starting server on port ${port}: ${(error as Error).message}`, (error as Error).stack);
+      Logger.error(
+        `❌ Error starting server on port ${port}: ${(error as Error).message}`,
+        (error as Error).stack,
+      );
       port++;
       if (port > 65535) {
         Logger.error(`❌ Could not start server after multiple port retries.`);

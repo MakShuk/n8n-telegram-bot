@@ -8,10 +8,10 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nest start",
-    "start:dev": "nest start --watch",
-    "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
+    "start": "set PORT=5661&& nest start",
+    "start:dev": "set PORT=5661&& nest start --watch",
+    "start:debug": "set PORT=5661&& nest start --debug --watch",
+    "start:prod": "set PORT=5661&& node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
   "dependencies": {
@@ -26,7 +26,8 @@
     "nestjs-rmq": "^2.13.0",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",
-    "swagger-ui-express": "^5.0.0"
+    "swagger-ui-express": "^5.0.0",
+    "telegraf": "^4.16.3"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",

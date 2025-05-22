@@ -11,4 +11,8 @@ export const configValidationSchema = Joi.object({
     .valid(...Object.values(ENV_VALUES.NODE_ENVIRONMENTS))
     .default(ENV_VALUES.DEFAULT_VALUES.NODE_ENV)
     .description('Node environment'),
+
+  BOT_TOKEN: Joi.string()
+    .required()
+    .description('Telegraf Bot Token'),
 });
