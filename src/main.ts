@@ -4,7 +4,7 @@ import { Logger } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
-  let port = 5888;
+  let port = 5890;
   let serverStarted = false;
 
   while (!serverStarted) {
