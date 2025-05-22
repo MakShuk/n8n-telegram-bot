@@ -12,16 +12,8 @@ export const configValidationSchema = Joi.object({
     .default(ENV_VALUES.DEFAULT_VALUES.NODE_ENV)
     .description('Node environment'),
 
-  BOT_TOKEN: Joi.string()
-    .required()
-    .description('Telegraf Bot Token'),
-  N8N_BASE_URL: Joi.string()
-    .uri()
-    .required()
-    .description('Base URL для n8n'),
+  TELEGRAM_BOT_TOKEN: Joi.string().required().description('Telegraf Bot Token'),
+  N8N_BASE_URL: Joi.string().uri().required().description('Base URL для n8n'),
 
-  N8N_API_KEY: Joi.string()
-    .required()
-    .description('API ключ для n8n'),
-
+  N8N_API_KEY: Joi.string().required().description('API ключ для n8n'),
 });

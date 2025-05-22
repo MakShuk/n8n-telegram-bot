@@ -1,28 +1,31 @@
-import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { Telegraf } from 'telegraf';
+import { Injectable, Inject } from '@nestjs/common';
+import { Context, Telegraf } from 'telegraf';
+import { message } from 'telegraf/filters';
 
 @Injectable()
-export class TelegrafService implements OnModuleInit, OnModuleDestroy {
-  private bot: Telegraf;
-
-  constructor(
-    private readonly configService: ConfigService,
-  ) {
-    const botToken = this.configService.get<string>('BOT_TOKEN', '');
-    this.bot = new Telegraf(botToken);
+export class TelegrafService {
+  constructor(@Inject('TELEGRAM_BOT_INSTANCE') private readonly bot: Telegraf<Context>) {}
+  createCommand(command: string, callback: (ctx: Context) => void) {
+    this.bot.command(command, callback);
   }
 
-  async onModuleInit() {
-    this.bot.start((ctx) => ctx.reply('Бот запущен!'));
-    await this.bot.launch();
+  textMessage(callback: (ctx: Context) => void) {
+    this.bot.on(message('text'), callback);
   }
 
-  async onModuleDestroy() {
-    await this.bot.stop('SIGTERM');
+  async voiceMessage(callback: (ctx: Context) => void) {
+    this.bot.on(message('voice'), callback);
   }
 
-  getBot(): Telegraf {
-    return this.bot;
+  imageMessage(callback: (ctx: Context) => void) {
+    this.bot.on(message('photo'), callback);
+  }
+
+  async fileMessage(callback: (ctx: Context) => void) {
+    this.bot.on(message('document'), callback);
+  }
+
+  async buttonAction(action: string | RegExp, callback: (ctx: Context) => void) {
+    this.bot.action(action, callback);
   }
 }
