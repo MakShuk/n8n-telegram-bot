@@ -4,6 +4,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { getConfigModuleOptions } from './configs/env-config/config.module';
 import { TelegramModule } from 'configs/telegram.config';
+import { BotCommandsModule } from './bot-commands/bot-commands.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { TelegramModule } from 'configs/telegram.config';
     TelegramModule.forRootAsync(),
     TelegrafModule,
     N8nModule,
+  BotCommandsModule,
   ],
   controllers: [],
   providers: [],

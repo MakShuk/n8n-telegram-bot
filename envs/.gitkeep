@@ -1,0 +1,33 @@
+import { Inject, Injectable } from '@nestjs/common';
+import OpenAI from 'openai';
+import { AssistantsService } from 'src/assistants/assistants.service';
+import { ThreadsService } from 'src/threads/threads.service';
+import { Context, Markup } from 'telegraf';
+import { Message } from 'telegraf/typings/core/types/typegram';
+import * as path from 'path';
+import * as fs from 'fs';
+import fetch from 'node-fetch';
+import { OggConverter } from './ogg-converter.service';
+import { VectorStoresService } from 'src/vector-stores/vector-stores.service';
+import { FilesService } from 'src/files/files.service';
+
+@Injectable()
+export class CommandsService {
+  constructor() {}
+
+  start = async (ctx: Context) => {
+    return ctx.reply(`🤖 Команды:
+  /start - Меню
+  };
+
+  disable = async (ctx: Context) => {
+    return ctx.reply(`⚠️ Функция недоступна для этого бота.`);
+  };
+
+  notResetContext = async (ctx: Context) => {
+    return ctx.reply(
+      `Ручной сброс состояния не требуется, бот автоматически сбрасывает состояние после завершения диалога.`,
+    );
+  };
+
+}

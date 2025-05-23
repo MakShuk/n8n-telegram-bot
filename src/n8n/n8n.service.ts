@@ -36,12 +36,6 @@ export class N8nService {
         this.httpService.get(url, { headers, params, timeout: 15000 }),
       );
       this.logger.log(`Workflows retrieved: ${response.status}`);
-
-      const workflows = response.data.data;
-      for (const workflow of workflows) {
-        console.log(workflow.nodes);
-      }
-
       return this.extractWorkflows(response.data);
     } catch (error) {
       this.handleError(error);
