@@ -1,29 +1,22 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-
-export class TriggerWorkflowDto {
-  @ApiProperty({ description: 'Данные для запуска workflow', type: Object })
-  payload!: Record<string, any>;
+export interface IN8NNode {
+    id: string;
+    name: string;
+    type?: string;
+    webhookId?: string;
 }
 
-export class GetWorkflowsQuery {
-  @ApiPropertyOptional({ type: Boolean, description: 'Фильтр по активности' })
-  active?: boolean;
+export interface IN8NWorkflowData {
+    id: string;
+    name: string;
+    nodes?: IN8NNode[];
+}
 
-  @ApiPropertyOptional({ type: String, description: 'Теги' })
-  tags?: string;
+export interface IN8NResponse {
+    data: IN8NWorkflowData[];
+}
 
-  @ApiPropertyOptional({ type: String, description: 'Имя workflow' })
-  name?: string;
-
-  @ApiPropertyOptional({ type: String, description: 'ID проекта' })
-  projectId?: string;
-
-  @ApiPropertyOptional({ type: Boolean, description: 'Исключить pinned data' })
-  excludePinnedData?: boolean;
-
-  @ApiPropertyOptional({ type: Number, description: 'Лимит' })
-  limit?: number;
-
-  @ApiPropertyOptional({ type: String, description: 'Курсор' })
-  cursor?: string;
+export interface Workflow {
+    id: string;
+    name: string;
+    nodes?: IN8NNode[];
 }
