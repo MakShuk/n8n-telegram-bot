@@ -19,4 +19,5 @@ export interface Workflow {
     id: string;
     name: string;
     nodes?: IN8NNode[];
+    webhookId?: string;
 }

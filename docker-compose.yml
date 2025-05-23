@@ -13,8 +13,6 @@ services:
     volumes:
       - ./envs:/app/envs
     restart: unless-stopped
-    ports:
-      - "5888:5888"
 
 networks:
   message_broker_network:

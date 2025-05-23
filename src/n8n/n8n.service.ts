@@ -24,7 +24,7 @@ export class N8nService {
     } catch (error) {
       this.handleError(error);
     }
-  }
+  } 
 
   async getWorkflows(): Promise<Workflow[]> {
     const url = `${this.configService.get('N8N_BASE_URL')}/api/v1/workflows`;
