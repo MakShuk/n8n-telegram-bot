@@ -30,8 +30,6 @@ It allows you to trigger n8n workflows from Telegram and receive notifications o
 - Docker support for easy deployment
 - Environment-based configuration
 
-![Example interface](screenshot.png)
-
 ## Requirements
 
 - Node.js >= 18.0.0
