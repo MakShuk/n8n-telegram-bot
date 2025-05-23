@@ -1,15 +1,19 @@
 version: '3.8'
 services:
   app:
-    build: 
+    build:
       context: .
       dockerfile: Dockerfile
     container_name: starter-template
     networks:
       - message_broker_network
+    env_file:
+      - ./envs/.env.development
     environment:
       - NODE_ENV=production
       - TZ=Europe/Moscow
+    ports:
+      - "5690:5690"
     volumes:
       - ./envs:/app/envs
     restart: unless-stopped

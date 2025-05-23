@@ -5,7 +5,6 @@ WORKDIR /app
 
 # Копируем файлы зависимостей
 COPY package*.json ./
-COPY .npmrc ./
 
 # Устанавливаем зависимости
 RUN npm ci
@@ -23,7 +22,7 @@ WORKDIR /app
 
 # Копируем файлы зависимостей
 COPY package*.json ./
-COPY .npmrc ./
+
 
 # Устанавливаем только production зависимости
 RUN npm ci --only=production
